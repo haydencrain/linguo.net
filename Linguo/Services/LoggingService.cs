@@ -40,6 +40,9 @@ namespace Linguo.Services
 			string logText = $"{DateTime.Now,-19} [{msg.Severity,8}] {msg.Source}: {msg.Message} {msg.Exception}";
 
 			File.AppendAllText(_logFile, logText + "\n");
+
+			Console.ResetColor();
+			ChangeConsoleColor(msg.Severity);
 			return Console.Out.WriteLineAsync(logText);
 		}
 
@@ -55,9 +58,9 @@ namespace Linguo.Services
 					Console.ForegroundColor = ConsoleColor.Yellow;
 					break;
 				case LogSeverity.Info:
+				case LogSeverity.Verbose:
 					Console.ForegroundColor = ConsoleColor.White;
 					break;
-				case LogSeverity.Verbose:
 				case LogSeverity.Debug:
 					Console.ForegroundColor = ConsoleColor.DarkGray;
 					break;
